@@ -1,5 +1,3 @@
-import { FullRefund } from "../cancelation/full_refund";
-import { PartialRefund } from "../cancelation/partial_refund";
 import { RefundRuleFactory } from "../cancelation/refund_rule_factory";
 import { DateRange } from "../value_objects/date_range";
 import { Property } from "./property";
@@ -40,6 +38,18 @@ export class Booking {
         this.status = 'CONFIRMED';
 
         property.addBooking(this);
+    }
+
+    static create(
+        id: string,
+        property: Property,
+        user: User,
+        startDate: Date,
+        endDate: Date,
+        guestCount: number
+    ): Booking {
+        const dateRange = new DateRange(startDate, endDate);
+        return new Booking(id, property, user, dateRange, guestCount);
     }
 
     getId(): string {
