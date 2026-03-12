@@ -141,4 +141,45 @@ describe('BookingService', () => {
         );
 
     });
+
+    it('deve cancelar uma reserva existente usando o repositório fake', async () => {
+        const mockProperty = {
+            getId: jest.fn().mockReturnValue('1'),
+            isAvailable: jest.fn().mockReturnValue(true),
+            validateGuestCount: jest.fn(),
+            calculateTotalPrice: jest.fn().mockReturnValue(500),
+            addBooking: jest.fn(),
+        } as any;
+
+        const mockUser = {
+            getId: jest.fn().mockReturnValue('1'),
+        } as any;
+
+        mockPropertyService.findPropertyById.mockResolvedValue(mockProperty);
+        mockUserService.findUserById.mockResolvedValue(mockUser);
+
+        const bookingDto: CreateBookingDTO = {
+            propertyId: '1',
+            guestId: '1',
+            startDate: new Date('2024-12-20'),
+            endDate: new Date('2024-12-25'),
+            guestCount: 2
+        };
+
+        const booking = await bookingService.createBooking(bookingDto);
+
+        const spyFindById = jest.spyOn(fakeBookingRepository, 'findById');
+        
+        await bookingService.cancelBooking(booking.getId());
+
+        const cancelledBooking = await fakeBookingRepository.findById(
+            booking.getId()
+        );
+        
+        expect(cancelledBooking?.getStatus()).toBe('CANCELLED');
+        expect(spyFindById).toHaveBeenCalledWith(booking.getId());
+        expect(spyFindById).toHaveBeenCalledTimes(2);
+
+        spyFindById.mockRestore();
+    });
 });
