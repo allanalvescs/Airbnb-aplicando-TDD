@@ -9,7 +9,7 @@ export class Property {
         private title: string,
         private description: string,
         private maxGuests: number,
-        private basePricePeerNight: number,
+        private basePricePerNight: number,
     ) {
         if (!title) {
             throw new Error('O título não pode ser vazio');
@@ -22,7 +22,7 @@ export class Property {
         this.title = title;
         this.description = description;
         this.maxGuests = maxGuests;
-        this.basePricePeerNight = basePricePeerNight;
+        this.basePricePerNight = basePricePerNight;
 
     }
 
@@ -42,8 +42,8 @@ export class Property {
         return this.maxGuests;
     }
 
-    getBasePricePeerNight(): number {
-        return this.basePricePeerNight;
+    getBasePricePerNight(): number {
+        return this.basePricePerNight;
     }
 
     validateGuestCount(guestCount: number): void {
@@ -54,7 +54,7 @@ export class Property {
 
     calculateTotalPrice(dateRange: DateRange): number {
         const totalNights = dateRange.getTotalNights();
-        let totalPrice = totalNights * this.basePricePeerNight;
+        let totalPrice = totalNights * this.basePricePerNight;
         
         if (totalNights >= 7) {
             totalPrice *= 0.9;
