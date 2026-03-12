@@ -37,7 +37,6 @@ export class BookingService {
         );
 
         await this.bookingRepository.save(booking);
-
         return booking;
     }
 }

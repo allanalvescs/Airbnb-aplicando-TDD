@@ -94,13 +94,3 @@ export class Booking {
         this.status = 'CANCELLED';
     }
 }
-
-// if (daysUntilCheckIn > 7) {
-//     // this.totalPrice = 0;
-//     const refund = new FullRefund();
-//     this.totalPrice = refund.calculateRefund(this.totalPrice);
-// } else if (daysUntilCheckIn >= 1) {
-//     // this.totalPrice = this.totalPrice * 0.5;
-//     const refund = new PartialRefund();
-//     this.totalPrice = refund.calculateRefund(this.totalPrice);
-// }
