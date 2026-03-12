@@ -6,7 +6,7 @@ import { User } from "./user";
 export class Booking {
     private readonly id: string;
     private readonly property: Property
-    private readonly user: User;
+    private readonly guest: User;
     private readonly dateRange: DateRange;
     private readonly guestCount: number;
     private status: 'CONFIRMED' | 'CANCELLED' = 'CONFIRMED';
@@ -15,7 +15,7 @@ export class Booking {
     constructor(
         id: string,
         property: Property,
-        user: User,
+        guest: User,
         dateRange: DateRange,
         guestCount: number
     ) {
@@ -31,7 +31,7 @@ export class Booking {
 
         this.id = id;
         this.property = property;
-        this.user = user;
+        this.guest = guest;
         this.dateRange = dateRange;
         this.guestCount = guestCount;
         this.totalPrice = property.calculateTotalPrice(dateRange);
@@ -43,13 +43,13 @@ export class Booking {
     static create(
         id: string,
         property: Property,
-        user: User,
+        guest: User,
         startDate: Date,
         endDate: Date,
         guestCount: number
     ): Booking {
         const dateRange = new DateRange(startDate, endDate);
-        return new Booking(id, property, user, dateRange, guestCount);
+        return new Booking(id, property, guest, dateRange, guestCount);
     }
 
     getId(): string {
@@ -60,8 +60,8 @@ export class Booking {
         return this.property;
     }
 
-    getUser(): User {
-        return this.user;
+    getGuest(): User {
+        return this.guest;
     }
 
     getDateRange(): DateRange {
