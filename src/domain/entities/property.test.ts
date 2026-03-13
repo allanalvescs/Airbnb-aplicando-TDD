@@ -24,7 +24,7 @@ describe('Property Entity', () => {
     it('deve lançar um erro se o nome for vazio', () => {
         expect(() => {
             new Property('123','','Uma casa com piscina e jardim.',4,200);
-        }).toThrow('Título é obrigatório');
+        }).toThrow('O título da propriedade é obrigatório.');
     });
 
     it('deve lançar um erro se o numero máximo de hóspedes for zero ou negativo', () => {
@@ -81,6 +81,12 @@ describe('Property Entity', () => {
         expect(property.isAvailable(dateRange2)).toBe(false);
         expect(property.isAvailable(dateRange)).toBe(false);
 
+    });
+
+    it('deve validar se o preço base por noite é maior que zero', () => {
+        expect(() => {            
+            new Property('123','Casa dos Sonhos','Uma casa com piscina e jardim.',4, -100);
+        }).toThrow('O preço base por noite deve ser maior que zero');
     });
 
 });

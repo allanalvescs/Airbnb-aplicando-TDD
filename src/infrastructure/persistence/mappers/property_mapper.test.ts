@@ -45,7 +45,7 @@ describe('PropertyMapper', () => {
 
         expect(() => {
             PropertyMapper.toDomain(propertyEntity);
-        }).toThrow('Título é obrigatório');
+        }).toThrow('O título da propriedade é obrigatório.');
     });
 
     it('deve lançar erro de validação quando maxGuests for menor ou igual a zero ao converter para domínio', () => {

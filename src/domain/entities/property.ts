@@ -11,17 +11,8 @@ export class Property {
         private maxGuests: number,
         private basePricePerNight: number,
     ) {
-        if (!id) {
-            throw new Error('ID é obrigatório');
-        }
+        this.validateRequiredFields(id, title, maxGuests, basePricePerNight);
 
-        if (!title) {
-            throw new Error('Título é obrigatório');
-        }
-
-        if (maxGuests <= 0) {
-            throw new Error('O número máximo de hóspedes deve ser maior que zero');
-        }
         this.id = id;
         this.title = title;
         this.description = description;
@@ -76,6 +67,24 @@ export class Property {
 
     addBooking(booking: Booking): void {
         this.bookings.push(booking);
+    }
+
+    private validateRequiredFields(id: string, title: string, maxGuests: number, basePricePerNight: number): void {
+        if (!id) {
+            throw new Error('ID é obrigatório');
+        }
+
+        if (!title) {
+            throw new Error('O título da propriedade é obrigatório.');
+        }
+
+        if (maxGuests <= 0) {
+            throw new Error('O número máximo de hóspedes deve ser maior que zero');
+        }
+
+        if (basePricePerNight < 0) {
+            throw new Error('O preço base por noite deve ser maior que zero');
+        }
     }
 
 }
