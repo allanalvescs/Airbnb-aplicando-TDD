@@ -11,8 +11,12 @@ export class Property {
         private maxGuests: number,
         private basePricePerNight: number,
     ) {
+        if (!id) {
+            throw new Error('ID é obrigatório');
+        }
+
         if (!title) {
-            throw new Error('O título não pode ser vazio');
+            throw new Error('Título é obrigatório');
         }
 
         if (maxGuests <= 0) {

@@ -24,7 +24,7 @@ describe('Property Entity', () => {
     it('deve lançar um erro se o nome for vazio', () => {
         expect(() => {
             new Property('123','','Uma casa com piscina e jardim.',4,200);
-        }).toThrow('O título não pode ser vazio');
+        }).toThrow('Título é obrigatório');
     });
 
     it('deve lançar um erro se o numero máximo de hóspedes for zero ou negativo', () => {
