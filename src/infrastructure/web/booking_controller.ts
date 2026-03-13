@@ -45,4 +45,17 @@ export class BookingController {
                 .json({ message: error.message || "Erro inesperado ocorrido!" });
         }
     }
+
+    async cancelBooking(req: Request, res: Response): Promise<Response> {
+       try {
+            const bookingId = req.params.id as string;
+            await this.bookingService.cancelBooking(bookingId);
+
+            return res.status(200).json({ message: "Reserva cancelada com sucesso" });
+       } catch (error: any) {
+            return res
+                .status(400)
+                .json({ message: error.message || "Erro inesperado ocorrido!" });
+       }
+    }
 }

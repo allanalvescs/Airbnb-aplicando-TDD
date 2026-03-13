@@ -60,9 +60,9 @@ beforeAll(async () => {
         bookingController.createBooking(req, res).catch((err) => next(err));
     });
 
-    // app.post("/bookings/:id/cancel", (req, res, next) => {
-    //     bookingController.cancelBooking(req, res).catch((err) => next(err));
-    // });
+    app.post("/bookings/:id/cancel", (req, res, next) => {
+        bookingController.cancelBooking(req, res).catch((err) => next(err));
+    });
 });
 
 afterAll(async () => {
@@ -172,6 +172,33 @@ describe("BookingController", () => {
 
         expect(response.status).toBe(400);
         expect(response.body.message).toBe("Propriedade não encontrada");
+    });
+   });
+
+   describe("#POST /bookings/:id/cancel - Cancelando reservas", () => {
+    it('deve cancelar uma reserva', async () => {
+        const response = await request(app).post("/bookings").send({
+            propertyId: "1",
+            guestId: "1",
+            startDate: "2024-12-20",
+            endDate: "2024-12-25",
+            guestCount: 2,
+        });
+
+        const bookingId = response.body.booking.id;
+
+        const cancelResponse = await request(app)
+            .post(`/bookings/${bookingId}/cancel`)
+
+        expect(cancelResponse.status).toBe(200);
+        expect(cancelResponse.body.message).toBe("Reserva cancelada com sucesso");
+    });
+
+    it('deve retornar 400 ao tentar cancelar uma reserva com ID inválido', async () => {
+        const cancelResponse = await request(app).post(`/bookings/999/cancel`);
+
+        expect(cancelResponse.status).toBe(400);
+        expect(cancelResponse.body.message).toBe("Reserva não encontrada");
     });
    });
 });
