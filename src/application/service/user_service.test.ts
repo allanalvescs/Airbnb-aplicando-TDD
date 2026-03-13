@@ -36,4 +36,18 @@ describe('UserService', () => {
         expect(user?.getName()).toBe('Test User');
     });
 
+    it('deve criar um novo usuário usando o método createUser e buscar novamente', async () => {
+        const createUserDTO = { name: 'New User' };
+        
+        const createdUser = await userService.createUser(createUserDTO);
+
+        expect(createdUser).not.toBeNull();
+        expect(createdUser).toBeInstanceOf(User);
+
+        const foundUser = await userService.findUserById(createdUser.getId());
+
+        expect(foundUser).not.toBeNull();
+        expect(foundUser).toBeInstanceOf(User);
+        expect(foundUser?.getName()).toBe('New User');
+    });
 });

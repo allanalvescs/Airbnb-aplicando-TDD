@@ -3,7 +3,7 @@ export class User {
     private readonly name: string;
     constructor(id: string, name: string) {
         if (name.trim() === '') {
-            throw new Error("O nome do usuário não pode ser vazio.");
+            throw new Error("O campo nome é obrigatório.");
         }
 
         if(!id) {
